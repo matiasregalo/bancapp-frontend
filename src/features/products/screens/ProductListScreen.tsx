@@ -42,6 +42,28 @@ export const ProductListScreen: React.FC = () => {
     [handleSelect],
   );
 
+  const listContent = error ? (
+    <Text style={styles.errorText} testID="error-message">
+      {error}
+    </Text>
+  ) : (
+    <>
+      <Text style={styles.counter} testID="product-count">
+        {`${filteredProducts.length} productos`}
+      </Text>
+      <FlatList
+        data={filteredProducts}
+        keyExtractor={keyExtractor}
+        renderItem={renderProduct}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={10}
+        windowSize={10}
+        initialNumToRender={10}
+        testID="product-list"
+      />
+    </>
+  );
+
   if (loading) {
     return (
       <View style={styles.centered}>
@@ -61,27 +83,7 @@ export const ProductListScreen: React.FC = () => {
           onChangeText={setSearchText}
           testID="search-input"
         />
-        {error ? (
-          <Text style={styles.errorText} testID="error-message">
-            {error}
-          </Text>
-        ) : (
-          <>
-            <Text style={styles.counter} testID="product-count">
-              {`${filteredProducts.length} productos`}
-            </Text>
-            <FlatList
-              data={filteredProducts}
-              keyExtractor={keyExtractor}
-              renderItem={renderProduct}
-              removeClippedSubviews={true}
-              maxToRenderPerBatch={10}
-              windowSize={10}
-              initialNumToRender={10}
-              testID="product-list"
-            />
-          </>
-        )}
+        {listContent}
       </View>
       <TouchableOpacity style={styles.addButton} onPress={handleAdd} testID="add-button">
         <Text style={styles.addButtonText}>Agregar</Text>
