@@ -7,7 +7,13 @@ export const styles = StyleSheet.create({
   titleSection: { paddingHorizontal: 20, paddingVertical: 16 },
   title: { fontSize: 22, fontWeight: 'bold', color: Colors.textPrimary },
   subtitle: { fontSize: 14, color: Colors.textSecondary, marginTop: 4 },
-  logo: { width: '100%', height: 120, marginVertical: 12 },
+  logo: { width: '100%', height: 120 },
+  logoPlaceholder: {
+    backgroundColor: Colors.backgroundDisabled,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoPlaceholderText: { fontSize: 14, color: Colors.textSecondary },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

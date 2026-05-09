@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ProductListScreen } from '../features/products/screens/ProductListScreen';
 import { ProductDetailScreen } from '../features/products/screens/ProductDetailScreen';
+import { ProductFormScreen } from '../features/products/screens/ProductFormScreen';
+import { ROUTES } from '../types/navigation.types';
 import type { RootStackParamList } from '../types/navigation.types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -10,8 +12,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export const AppNavigator: React.FC = () => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="ProductList" component={ProductListScreen} />
-      <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+      <Stack.Screen name={ROUTES.ProductList} component={ProductListScreen} />
+      <Stack.Screen name={ROUTES.ProductDetail} component={ProductDetailScreen} />
+      <Stack.Screen name={ROUTES.ProductForm} component={ProductFormScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );

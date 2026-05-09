@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useProducts } from '../hooks/useProducts';
 import { ProductCard } from '../components/ProductCard';
 import { Header } from '../../../shared/components/Header';
+import { ROUTES } from '../../../types/navigation.types';
 import type { RootStackParamList } from '../../../types/navigation.types';
 import type { Product } from '../../../types/product.types';
 import { Colors } from '../../../shared/theme/colors';
@@ -23,15 +24,21 @@ type NavProp = NativeStackNavigationProp<RootStackParamList, 'ProductList'>;
 
 export const ProductListScreen: React.FC = () => {
   const navigation = useNavigation<NavProp>();
-  const { filteredProducts, searchText, setSearchText, loading, error } = useProducts();
+  const { filteredProducts, searchText, setSearchText, loading, error, refetch } = useProducts();
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
   const handleSelect = useCallback(
-    (product: Product) => navigation.navigate('ProductDetail', { product }),
+    (product: Product) => navigation.navigate(ROUTES.ProductDetail, { product }),
     [navigation],
   );
 
   const handleAdd = useCallback(
-    () => navigation.navigate('ProductForm', { mode: 'create' }),
+    () => navigation.navigate(ROUTES.ProductForm, { mode: 'create' }),
     [navigation],
   );
 
