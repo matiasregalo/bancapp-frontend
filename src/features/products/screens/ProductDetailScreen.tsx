@@ -5,13 +5,13 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  StyleSheet,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 import { Header } from '../../../shared/components/Header';
 import type { RootStackParamList } from '../../../types/navigation.types';
+import { styles } from './ProductDetailScreen.styles';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'ProductDetail'>;
 type RouteType = RouteProp<RootStackParamList, 'ProductDetail'>;
@@ -61,46 +61,3 @@ export const ProductDetailScreen: React.FC = () => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  content: { paddingBottom: 32 },
-  titleSection: { paddingHorizontal: 20, paddingVertical: 16 },
-  title: { fontSize: 22, fontWeight: 'bold', color: '#1a1a1a' },
-  subtitle: { fontSize: 14, color: '#888', marginTop: 4 },
-  logo: { width: '100%', height: 120, marginVertical: 12 },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  rowLabel: { fontSize: 14, color: '#888' },
-  rowValue: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
-    flex: 1,
-    textAlign: 'right',
-  },
-  editButton: {
-    backgroundColor: '#e0e0e0',
-    padding: 16,
-    alignItems: 'center',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginTop: 24,
-  },
-  editButtonText: { fontSize: 16, fontWeight: 'bold', color: '#1a1a1a' },
-  deleteButton: {
-    backgroundColor: '#e53e3e',
-    padding: 16,
-    alignItems: 'center',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginTop: 12,
-  },
-  deleteButtonText: { fontSize: 16, fontWeight: 'bold', color: '#fff' },
-});
