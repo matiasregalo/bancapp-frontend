@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useProducts } from '../hooks/useProducts';
 import { ProductCard } from '../components/ProductCard';
@@ -24,7 +24,13 @@ type NavProp = NativeStackNavigationProp<RootStackParamList, 'ProductList'>;
 
 export const ProductListScreen: React.FC = () => {
   const navigation = useNavigation<NavProp>();
-  const { filteredProducts, searchText, setSearchText, loading, error } = useProducts();
+  const { filteredProducts, searchText, setSearchText, loading, error, refetch } = useProducts();
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
   const handleSelect = useCallback(
     (product: Product) => navigation.navigate(ROUTES.ProductDetail, { product }),
