@@ -129,6 +129,23 @@ src/
 
 ---
 
+## Validaciones del formulario
+
+Las validaciones del frontend están alineadas con el DTO del backend (`ProductDTO`):
+
+| Campo | Regla |
+|-------|-------|
+| ID | Requerido · entre 3 y 10 caracteres · único (verificado vía API) |
+| Nombre | Requerido · entre **6** y 100 caracteres |
+| Descripción | Requerido · entre 10 y 200 caracteres |
+| Logo | Requerido · URL de imagen accesible desde el dispositivo/emulador |
+| Fecha Liberación | Requerida · formato `AAAA-MM-DD` · debe ser igual o mayor a la fecha actual |
+| Fecha Revisión | Calculada automáticamente (Fecha Liberación + 1 año exacto) · solo lectura |
+
+> **Nota sobre logos**: el frontend carga la imagen directamente desde la URL proporcionada. Si la URL no es accesible desde el emulador (URL inválida, caída o bloqueada), se muestra "Sin imagen disponible". Para pruebas se recomienda usar `https://picsum.photos/seed/bancapp/400/200`.
+
+---
+
 ## API — Endpoints principales
 
 Base URL: `http://localhost:3002`
