@@ -10,6 +10,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 import { Header } from '../../../shared/components/Header';
+import { ROUTES } from '../../../types/navigation.types';
 import type { RootStackParamList } from '../../../types/navigation.types';
 import { styles } from './ProductDetailScreen.styles';
 
@@ -29,7 +30,7 @@ export const ProductDetailScreen: React.FC = () => {
   const { product } = route.params;
 
   const handleEdit = useCallback(
-    () => navigation.navigate('ProductForm', { mode: 'edit', product }),
+    () => navigation.navigate(ROUTES.ProductForm, { mode: 'edit', product }),
     [navigation, product],
   );
 
