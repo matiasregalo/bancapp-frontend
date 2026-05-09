@@ -26,7 +26,7 @@ function validateId(id: string, mode: 'create' | 'edit'): Pick<ProductFormErrors
 
 function validateName(name: string): Pick<ProductFormErrors, 'name'> {
   if (!name.trim()) { return { name: REQUIRED }; }
-  if (name.length < 5) { return { name: MESSAGES.name.min }; }
+  if (name.length < 6) { return { name: MESSAGES.name.min }; }
   if (name.length > 100) { return { name: MESSAGES.name.max }; }
   return {};
 }
@@ -43,8 +43,13 @@ function validateLogo(logo: string): Pick<ProductFormErrors, 'logo'> {
   return {};
 }
 
+const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+
 function validateDateRelease(date_release: string): Pick<ProductFormErrors, 'date_release'> {
   if (!date_release.trim()) { return { date_release: REQUIRED }; }
+  if (!DATE_REGEX.test(date_release)) {
+    return { date_release: MESSAGES.date_release.format };
+  }
   if (date_release < getLocalDateString()) {
     return { date_release: MESSAGES.date_release.past };
   }

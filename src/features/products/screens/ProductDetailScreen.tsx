@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -28,6 +28,7 @@ export const ProductDetailScreen: React.FC = () => {
   const navigation = useNavigation<NavProp>();
   const route = useRoute<RouteType>();
   const { product } = route.params;
+  const [logoError, setLogoError] = useState(false);
 
   const handleEdit = useCallback(
     () => navigation.navigate(ROUTES.ProductForm, { mode: 'edit', product }),
@@ -43,14 +44,24 @@ export const ProductDetailScreen: React.FC = () => {
         </Text>
         <Text style={styles.subtitle}>Información extra</Text>
       </View>
-      <Image
-        source={{ uri: product.logo }}
-        style={styles.logo}
-        testID="product-logo"
-        resizeMode="contain"
-      />
       <DetailRow label="Nombre" value={product.name} />
       <DetailRow label="Descripción" value={product.description} />
+      <View style={styles.row}>
+        <Text style={styles.rowLabel}>Logo</Text>
+      </View>
+      {logoError ? (
+        <View style={[styles.logo, styles.logoPlaceholder]} testID="product-logo-placeholder">
+          <Text style={styles.logoPlaceholderText}>Sin imagen disponible</Text>
+        </View>
+      ) : (
+        <Image
+          source={{ uri: product.logo }}
+          style={styles.logo}
+          testID="product-logo"
+          resizeMode="contain"
+          onError={() => setLogoError(true)}
+        />
+      )}
       <DetailRow label="Fecha liberación" value={product.date_release} />
       <DetailRow label="Fecha revisión" value={product.date_revision} />
       <TouchableOpacity style={styles.editButton} onPress={handleEdit} testID="edit-button">
