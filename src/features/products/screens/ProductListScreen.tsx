@@ -16,6 +16,9 @@ import { Header } from '../../../shared/components/Header';
 import type { RootStackParamList } from '../../../types/navigation.types';
 import type { Product } from '../../../types/product.types';
 
+const BRAND_YELLOW = '#FFDD00';
+const keyExtractor = (item: Product): string => item.id;
+
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'ProductList'>;
 
 export const ProductListScreen: React.FC = () => {
@@ -42,7 +45,7 @@ export const ProductListScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#FFDD00" testID="loading-indicator" />
+        <ActivityIndicator size="large" color={BRAND_YELLOW} testID="loading-indicator" />
       </View>
     );
   }
@@ -69,7 +72,7 @@ export const ProductListScreen: React.FC = () => {
             </Text>
             <FlatList
               data={filteredProducts}
-              keyExtractor={item => item.id}
+              keyExtractor={keyExtractor}
               renderItem={renderProduct}
               removeClippedSubviews={true}
               maxToRenderPerBatch={10}
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
   counter: { fontSize: 14, color: '#555', marginBottom: 8 },
   errorText: { color: 'red', fontSize: 14, marginTop: 8 },
   addButton: {
-    backgroundColor: '#FFDD00',
+    backgroundColor: BRAND_YELLOW,
     padding: 16,
     alignItems: 'center',
     borderRadius: 8,
