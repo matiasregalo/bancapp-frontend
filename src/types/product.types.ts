@@ -32,11 +32,12 @@ export interface ProductFormState {
   date_revision: string;
 }
 
+export type ProductFormValues = ProductFormState;
+
 export interface ProductFormErrors {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  date_release: string;
-  date_revision: string;
+  id?: string;
+  name?: string;
+  description?: string;
+  logo?: string;
+  date_release?: string;
 }
