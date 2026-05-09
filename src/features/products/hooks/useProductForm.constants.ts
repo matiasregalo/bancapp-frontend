@@ -18,7 +18,7 @@ export const MESSAGES = {
     exists: 'ID no válido!',
   },
   name: {
-    min: 'Mínimo 5 caracteres',
+    min: 'Mínimo 6 caracteres',
     max: 'Máximo 100 caracteres',
   },
   description: {
@@ -26,6 +26,7 @@ export const MESSAGES = {
     max: 'Máximo 200 caracteres',
   },
   date_release: {
+    format: 'Formato inválido. Use AAAA-MM-DD',
     past: 'La fecha debe ser igual o mayor a la fecha actual',
   },
   api: {
