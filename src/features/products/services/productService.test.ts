@@ -36,7 +36,7 @@ describe('productService', () => {
 
       expect(result).toEqual(mockProducts);
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:3002/bp/products',
+        'http://10.0.2.2:3002/bp/products',
       );
     });
 
