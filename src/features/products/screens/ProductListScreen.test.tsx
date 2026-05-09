@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ProductListScreen } from './ProductListScreen';
 import { useProducts } from '../hooks/useProducts';
 import type { Product } from '../../../types/product.types';
+import { ROUTES } from '../../../types/navigation.types';
 
 jest.mock('../hooks/useProducts');
 
@@ -146,7 +147,7 @@ describe('ProductListScreen', () => {
     mockUseProducts.mockReturnValue(defaultHookState);
     const { getByTestId } = renderScreen();
     fireEvent.press(getByTestId('add-button'));
-    expect(mockNavigate).toHaveBeenCalledWith('ProductForm', { mode: 'create' });
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ProductForm, { mode: 'create' });
   });
 
   it('tap en ProductCard navega a ProductDetail con el producto', () => {
@@ -157,6 +158,6 @@ describe('ProductListScreen', () => {
     });
     const { getByTestId } = renderScreen();
     fireEvent.press(getByTestId('product-card'));
-    expect(mockNavigate).toHaveBeenCalledWith('ProductDetail', { product: products[0] });
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ProductDetail, { product: products[0] });
   });
 });

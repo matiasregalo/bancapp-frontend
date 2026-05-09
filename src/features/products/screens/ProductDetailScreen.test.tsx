@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { ProductDetailScreen } from './ProductDetailScreen';
 import type { Product } from '../../../types/product.types';
+import { ROUTES } from '../../../types/navigation.types';
 
 const mockNavigate = jest.fn();
 
@@ -68,7 +69,7 @@ describe('ProductDetailScreen', () => {
   it('botón Editar navega a ProductForm con mode edit y el producto', () => {
     const { getByTestId } = render(<ProductDetailScreen />);
     fireEvent.press(getByTestId('edit-button'));
-    expect(mockNavigate).toHaveBeenCalledWith('ProductForm', {
+    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ProductForm, {
       mode: 'edit',
       product: mockProduct,
     });
