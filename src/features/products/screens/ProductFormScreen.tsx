@@ -1,50 +1,27 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   Text,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RouteProp } from '@react-navigation/native';
 import { Header } from '../../../shared/components/Header';
 import { FormField } from '../components/FormField';
-import { useProductForm } from '../hooks/useProductForm';
-import type { RootStackParamList } from '../../../types/navigation.types';
-import type { ProductFormValues } from '../../../types/product.types';
+import { useProductFormScreen } from './useProductFormScreen';
 import { Colors } from '../../../shared/theme/colors';
 import { styles } from './ProductFormScreen.styles';
 
-type NavProp = NativeStackNavigationProp<RootStackParamList, 'ProductForm'>;
-type RouteType = RouteProp<RootStackParamList, 'ProductForm'>;
-
 export const ProductFormScreen: React.FC = () => {
-  const navigation = useNavigation<NavProp>();
-  const route = useRoute<RouteType>();
-
-  const isEdit = route.params.mode === 'edit';
-  const initialProduct = isEdit ? route.params.product : undefined;
-
-  const onSuccess = useCallback(
-    () => navigation.navigate('ProductList'),
-    [navigation],
-  );
-
   const {
+    isEdit,
     values,
     errors,
     isSubmitting,
     apiError,
-    handleChange,
+    changeField,
     handleSubmit,
     handleReset,
-  } = useProductForm(route.params.mode, initialProduct, onSuccess);
-
-  const changeField = useCallback(
-    (field: keyof ProductFormValues) => (v: string) => handleChange(field, v),
-    [handleChange],
-  );
+  } = useProductFormScreen();
 
   return (
     <ScrollView

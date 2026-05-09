@@ -1,16 +1,15 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { ProductFormScreen } from './ProductFormScreen';
-import { useProductForm } from '../hooks/useProductForm';
+import { useProductFormScreen } from './useProductFormScreen';
 import type { Product, ProductFormValues, ProductFormErrors } from '../../../types/product.types';
 
-jest.mock('../hooks/useProductForm');
-const mockUseProductForm = useProductForm as jest.MockedFunction<typeof useProductForm>;
+jest.mock('./useProductFormScreen');
+const mockUseProductFormScreen = useProductFormScreen as jest.MockedFunction<typeof useProductFormScreen>;
 
 const mockHandleSubmit = jest.fn();
 const mockHandleReset = jest.fn();
-const mockHandleChange = jest.fn();
-const mockNavigate = jest.fn();
+const mockChangeField = jest.fn(() => jest.fn());
 
 const mockProduct: Product = {
   id: 'trj-crd',
@@ -20,16 +19,6 @@ const mockProduct: Product = {
   date_release: '2030-01-01',
   date_revision: '2031-01-01',
 };
-
-let mockRouteParams: { mode: 'create' } | { mode: 'edit'; product: Product } = {
-  mode: 'create',
-};
-
-jest.mock('@react-navigation/native', () => ({
-  ...jest.requireActual('@react-navigation/native'),
-  useNavigation: () => ({ navigate: mockNavigate }),
-  useRoute: () => ({ params: mockRouteParams }),
-}));
 
 const emptyValues: ProductFormValues = {
   id: '',
@@ -41,11 +30,12 @@ const emptyValues: ProductFormValues = {
 };
 
 const defaultHookReturn = {
+  isEdit: false,
   values: emptyValues,
   errors: {} as ProductFormErrors,
   isSubmitting: false,
   apiError: null,
-  handleChange: mockHandleChange,
+  changeField: mockChangeField,
   handleSubmit: mockHandleSubmit,
   handleReset: mockHandleReset,
 };
@@ -53,8 +43,7 @@ const defaultHookReturn = {
 describe('ProductFormScreen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockRouteParams = { mode: 'create' };
-    mockUseProductForm.mockReturnValue(defaultHookReturn);
+    mockUseProductFormScreen.mockReturnValue(defaultHookReturn);
   });
 
   describe('modo create', () => {
@@ -108,9 +97,9 @@ describe('ProductFormScreen', () => {
 
   describe('modo edit', () => {
     beforeEach(() => {
-      mockRouteParams = { mode: 'edit', product: mockProduct };
-      mockUseProductForm.mockReturnValue({
+      mockUseProductFormScreen.mockReturnValue({
         ...defaultHookReturn,
+        isEdit: true,
         values: { ...mockProduct },
       });
     });
@@ -142,7 +131,7 @@ describe('ProductFormScreen', () => {
 
   describe('estados de error', () => {
     it('muestra texto de error de campo ID cuando errors.id tiene valor', () => {
-      mockUseProductForm.mockReturnValue({
+      mockUseProductFormScreen.mockReturnValue({
         ...defaultHookReturn,
         errors: { id: 'Este campo es requerido!' },
       });
@@ -151,7 +140,7 @@ describe('ProductFormScreen', () => {
     });
 
     it('muestra texto de error de campo Nombre cuando errors.name tiene valor', () => {
-      mockUseProductForm.mockReturnValue({
+      mockUseProductFormScreen.mockReturnValue({
         ...defaultHookReturn,
         errors: { name: 'Mínimo 5 caracteres' },
       });
@@ -160,7 +149,7 @@ describe('ProductFormScreen', () => {
     });
 
     it('muestra apiError cuando tiene valor', () => {
-      mockUseProductForm.mockReturnValue({
+      mockUseProductFormScreen.mockReturnValue({
         ...defaultHookReturn,
         apiError: 'Error al guardar el producto',
       });
@@ -174,7 +163,7 @@ describe('ProductFormScreen', () => {
     });
 
     it('muestra "ID no válido!" cuando el ID ya existe', () => {
-      mockUseProductForm.mockReturnValue({
+      mockUseProductFormScreen.mockReturnValue({
         ...defaultHookReturn,
         errors: { id: 'ID no válido!' },
       });
@@ -185,7 +174,7 @@ describe('ProductFormScreen', () => {
 
   describe('estado de carga', () => {
     it('botón Enviar está deshabilitado cuando isSubmitting=true', () => {
-      mockUseProductForm.mockReturnValue({
+      mockUseProductFormScreen.mockReturnValue({
         ...defaultHookReturn,
         isSubmitting: true,
       });
@@ -194,7 +183,7 @@ describe('ProductFormScreen', () => {
     });
 
     it('muestra ActivityIndicator en lugar del texto Enviar cuando isSubmitting=true', () => {
-      mockUseProductForm.mockReturnValue({
+      mockUseProductFormScreen.mockReturnValue({
         ...defaultHookReturn,
         isSubmitting: true,
       });
