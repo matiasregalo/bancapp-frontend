@@ -15,8 +15,8 @@ import { ProductCard } from '../components/ProductCard';
 import { Header } from '../../../shared/components/Header';
 import type { RootStackParamList } from '../../../types/navigation.types';
 import type { Product } from '../../../types/product.types';
+import { Colors } from '../../../shared/theme/colors';
 
-const BRAND_YELLOW = '#FFDD00';
 const keyExtractor = (item: Product): string => item.id;
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'ProductList'>;
@@ -45,7 +45,7 @@ export const ProductListScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color={BRAND_YELLOW} testID="loading-indicator" />
+        <ActivityIndicator size="large" color={Colors.brand} testID="loading-indicator" />
       </View>
     );
   }
@@ -91,26 +91,26 @@ export const ProductListScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: Colors.white },
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   content: { flex: 1, paddingHorizontal: 16 },
   searchInput: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: Colors.border,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,
     marginVertical: 12,
     fontSize: 15,
   },
-  counter: { fontSize: 14, color: '#555', marginBottom: 8 },
-  errorText: { color: 'red', fontSize: 14, marginTop: 8 },
+  counter: { fontSize: 14, color: Colors.textMuted, marginBottom: 8 },
+  errorText: { color: Colors.danger, fontSize: 14, marginTop: 8 },
   addButton: {
-    backgroundColor: BRAND_YELLOW,
+    backgroundColor: Colors.brand,
     padding: 16,
     alignItems: 'center',
     borderRadius: 8,
     margin: 16,
   },
-  addButtonText: { fontSize: 16, fontWeight: 'bold', color: '#1a1a1a' },
+  addButtonText: { fontSize: 16, fontWeight: 'bold', color: Colors.textPrimary },
 });
